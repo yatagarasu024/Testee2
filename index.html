@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagem da Sorte</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            flex-direction: column;
+            color: #4B0082;
+        }
+        .card-container {
+            position: relative;
+            width: 320px;
+            height: 240px;
+        }
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #FFC0CB;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: transform 0.5s ease;
+        }
+        .flap {
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            background-color: #FFB6C1;
+            top: 0;
+            left: 0;
+            border-radius: 10px 10px 0 0;
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            transition: transform 1s;
+        }
+        .flap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background-color: #FF69B4;
+            transform: translateX(-50%);
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+        }
+        .envelope.open .flap {
+            transform: translateY(-150%);
+        }
+        .envelope-body {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 70%;
+            background-color: #FFC0CB;
+            border-top: 2px solid #FF69B4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .heart-decor {
+            font-size: 48px;
+            color: #BA55D3;
+        }
+        .decorations {
+            display: flex;
+            gap: 5px;
+        }
+        .star, .heart {
+            font-size: 24px;
+            color: #4B0082;
+        }
+        .heart {
+            color: #BA55D3;
+        }
+        .message-container {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #FFB6C1;
+            border-radius: 10px;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .message {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .twinkling-stars {
+            display: flex;
+            gap: 5px;
+        }
+        .twinkling-star {
+            font-size: 24px;
+            animation: twinkle 1.5s infinite alternate;
+        }
+        .twinkling-star:nth-child(1) { color: #FFD700; }
+        .twinkling-star:nth-child(2) { color: #FF69B4; animation-delay: 0.2s; }
+        .twinkling-star:nth-child(3) { color: #ADFF2F; animation-delay: 0.4s; }
+        .twinkling-star:nth-child(4) { color: #00BFFF; animation-delay: 0.6s; }
+        .twinkling-star:nth-child(5) { color: #FF8C00; animation-delay: 0.8s; }
+        @keyframes twinkle {
+            from { opacity: 0.5; transform: scale(1); }
+            to { opacity: 1; transform: scale(1.5); }
+        }
+        .instruction {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #4B0082;
+        }
+        .open-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #4B0082;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .open-button:hover {
+            background-color: #6A0DAD;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="envelope" id="envelope">
+            <div class="flap"></div>
+            <div class="envelope-body">
+                <div class="heart-decor">♥</div>
+                <div class="decorations">
+                    <span class="star">★</span>
+                    <span class="heart">♥</span>
+                    <span class="star">★</span>
+                    <span class="heart">♥</span>
+                    <span class="star">★</span>
+                </div>
+            </div>
+        </div>
+        <div class="message-container" id="messageContainer">
+            <div class="message">
+                니콜리, 행운을 빌어요!
+            </div>
+            <div class="twinkling-stars">
+                <span class="twinkling-star">★</span>
+                <span class="twinkling-star">★</span>
+                <span class="twinkling-star">★</span>
+                <span class="twinkling-star">★</span>
+                <span class="twinkling-star">★</span>
+            </div>
+        </div>
+    </div>
+    <button class="open-button" onclick="openEnvelope()">Abrir Carta</button>
+    <div class="instruction">(clique no botão para abrir a carta...)</div>
+
+    <script>
+        function openEnvelope() {
+            const envelope = document.getElementById('envelope');
+            const messageContainer = document.getElementById('messageContainer');
+
+            envelope.classList.add('open');
+            
+            setTimeout(() => {
+                envelope.style.display = 'none';
+                messageContainer.style.display = 'flex';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
